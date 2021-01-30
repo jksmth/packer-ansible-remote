@@ -1,0 +1,42 @@
+{
+  "variables": {
+    "ansible_host": "default",
+    "ansible_connection": "docker"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "alpine:latest",
+      "commit": true,
+      "run_command": [ "-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}", "/bin/sh" ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apk add python3"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "ansible/site.yml",
+      "galaxy_file": "ansible/roles/requirements.yml",
+      "galaxy_force_install": true,
+      "extra_arguments": [
+        "--extra-vars",
+        "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "packer-ansible-test",
+        "tags": "latest"
+      }
+    ]
+  ]
+}
