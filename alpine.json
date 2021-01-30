@@ -35,7 +35,7 @@
       {
         "type": "docker-tag",
         "repository": "packer-ansible-test",
-        "tags": "latest"
+        "tags": ["latest"]
       }
     ]
   ]
