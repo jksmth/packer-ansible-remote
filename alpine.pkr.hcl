@@ -14,12 +14,23 @@ source "docker" "alpine" {
   run_command = ["-d", "-i", "-t", "--name", var.ansible_host, "{{.Image}}", "/bin/sh"]
 }
 
-build {
-  sources = ["source.docker.alpine"]
+source "docker" "centos" {
+  commit      = true
+  image       = "centos:latest"
+  run_command = ["-d", "-i", "-t", "--name", var.ansible_host, "{{.Image}}", "/bin/sh"]
+}
 
-  provisioner "shell" {
-    inline = ["apk add python3"]
-  }
+source "docker" "ubuntu" {
+  commit      = true
+  image       = "ubuntu:latest"
+  run_command = ["-d", "-i", "-t", "--name", var.ansible_host, "{{.Image}}", "/bin/sh"]
+}
+
+build {
+  sources = [
+    "source.docker.alpine"
+  ]
+
   provisioner "ansible" {
     extra_arguments      = [
       "--extra-vars",

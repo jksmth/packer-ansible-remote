@@ -1,0 +1,4 @@
+---
+- name: Bootstrap python in tmpfs
+  raw: "{{ item }}"
+  loop: "{{ bootstrap_python_raw }}"

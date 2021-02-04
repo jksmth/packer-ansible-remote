@@ -1,0 +1,12 @@
+---
+tmpfs: "{{ provision_overlay }}/merge"
+bootstrap_python_raw:
+  - mkdir -p {{ provision_overlay }}
+  - mount -t tmpfs tmpfs {{ provision_overlay }}
+  - mkdir -p {{ provision_overlay }}/top {{ provision_overlay }}/merge {{ provision_overlay }}/work
+  - mount -t overlay overlay -o lowerdir=/,upperdir={{ provision_overlay }}/top,workdir={{ provision_overlay }}/work {{ provision_overlay }}/merge
+  - mount --rbind /dev {{ provision_overlay }}/merge/dev
+  - mount --rbind /etc/resolv.conf {{ provision_overlay }}/merge/etc/resolv.conf
+  - test $(command -v apk) && chroot {{ tmpfs }} sh -c 'apk add python3' || true
+  - test $(command -v yum) && chroot {{ tmpfs }} yum install -y python3 || true 
+  - test $(command -v apt-get) && chroot {{ tmpfs }} sh -c 'apt-get update && apt-get install -y python3-minimal python3-apt' || true
