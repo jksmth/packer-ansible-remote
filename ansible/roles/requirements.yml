@@ -1,4 +1,8 @@
 ---
+- src: git+https://github.com/jksmth/ansible-role-chroot-tmpfs-raw
+  version: main
+  name: jksmth.ansible-role-chroot-tmpfs-raw
+
 - src: git+https://github.com/jksmth/ansible-role-common
   version: main
   name: jksmth.ansible-role-common

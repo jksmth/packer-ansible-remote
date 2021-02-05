@@ -3,7 +3,7 @@
   gather_facts: no
   become: true
   roles:
-    - install-python-raw
+    - jksmth.ansible-role-chroot-tmpfs-raw
 
 - hosts: default
   become: true

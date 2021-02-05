@@ -1,6 +1,8 @@
 ---
-provision_overlay: /tmp/ansible_provision_overlay
-ansible_python_interpreter_chroot: "LD_LIBRARY_PATH='{{ provision_overlay }}/merge/usr/lib:{{ provision_overlay }}/merge/lib/x86_64-linux-gnu' {{ provision_overlay }}/merge/usr/bin/python3"
+chroot_libs:
+  - "{{ chroot_path }}/usr/lib"
+  - "{{ chroot_path }}/lib/x86_64-linux-gnu"
+ansible_python_interpreter_chroot: "LD_LIBRARY_PATH='{{ chroot_libs | join(':') }}' {{ chroot_path }}/usr/bin/python3"
 packages:
   - zip
   - curl
