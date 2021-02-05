@@ -6,7 +6,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "centos:latest",
+      "image": "alpine:latest",
       "commit": true,
       "run_command": [ "-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}", "/bin/sh" ],
       "cap_add": ["SYS_ADMIN"]
