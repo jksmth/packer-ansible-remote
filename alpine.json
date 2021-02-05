@@ -6,18 +6,13 @@
   "builders": [
     {
       "type": "docker",
-      "image": "alpine:latest",
+      "image": "centos:latest",
       "commit": true,
-      "run_command": [ "-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}", "/bin/sh" ]
+      "run_command": [ "-d", "-i", "-t", "--name", "{{user `ansible_host`}}", "{{.Image}}", "/bin/sh" ],
+      "cap_add": ["SYS_ADMIN"]
     }
   ],
   "provisioners": [
-    {
-      "type": "shell",
-      "inline": [
-        "apk add python3"
-      ]
-    },
     {
       "type": "ansible",
       "user": "root",
